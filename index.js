@@ -104,7 +104,7 @@ app.post('/alerta-bitcoin', async (req, res) => {
         const { sinal, preco_brl, interpretacao } = req.body;
         
         // SEU NÚMERO - COLOQUE AQUI!
-        const SEU_NUMERO = '55'; // 🔴 SUBSTITUA!!!
+        const SEU_NUMERO = '5534997766047'; // 🔴 SUBSTITUA!!!
         
         const mensagem = `🚨 *ALERTA BITCOIN* 🚨\n\n` +
                         `📊 *Sinal:* ${sinal}\n` +
