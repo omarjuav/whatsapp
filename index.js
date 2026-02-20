@@ -2,7 +2,6 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const express = require('express');
 const axios = require('axios');
-const puppeteer = require('puppeteer');
 
 const app = express();
 app.use(express.json());
@@ -10,10 +9,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-// Configuração específica para o Render
+// 🔴 MUDANÇA 1: Caminho para o volume persistente do Fly.io
 const client = new Client({
     authStrategy: new LocalAuth({
-        dataPath: '/opt/render/.wwebjs_auth' // Caminho específico para o Render
+        dataPath: '/data/whatsapp-data' // Agora usa o volume do Fly.io!
     }),
     puppeteer: {
         headless: true,
@@ -24,10 +23,11 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--single-process', // Reduz uso de memória
+            '--single-process',
             '--disable-gpu'
         ],
-        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || null // Deixa o puppeteer encontrar
+        // 🔴 MUDANÇA 2: Caminho do Chrome no Fly.io
+        executablePath: '/usr/bin/chromium' // Caminho fixo do Chrome no Fly.io
     }
 });
 
@@ -44,8 +44,6 @@ client.on('qr', (qr) => {
 client.on('ready', () => {
     console.log('✅ WhatsApp conectado e pronto!');
     console.log('📊 Servidor rodando na porta:', PORT);
-    
-    // Informações do cliente
     console.log('👤 Nome:', client.info.pushname);
     console.log('📱 Número:', client.info.wid.user);
 });
@@ -103,8 +101,8 @@ app.post('/alerta-bitcoin', async (req, res) => {
     try {
         const { sinal, preco_brl, interpretacao } = req.body;
         
-        // SEU NÚMERO - COLOQUE AQUI!
-        const SEU_NUMERO = '5534997766047'; // 🔴 SUBSTITUA!!!
+        // SEU NÚMERO - JÁ ESTÁ CORRETO!
+        const SEU_NUMERO = '5534997766047'; // ✅ Perfeito!
         
         const mensagem = `🚨 *ALERTA BITCOIN* 🚨\n\n` +
                         `📊 *Sinal:* ${sinal}\n` +
