@@ -1,5 +1,5 @@
 # fly.toml
-app = "whatsapp-bot-seunome" # Use o nome que apareceu na interface
+app = "whatsapp-bot" # Use o nome que apareceu na interface
 
 primary_region = "gru"
 
